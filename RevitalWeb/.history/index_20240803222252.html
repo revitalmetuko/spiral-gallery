@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revital Metuko</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            direction: rtl;
+            text-align: right;
+        }
+        .header {
+            background-color: #333;
+            color: #fff;
+            padding: 1em 0;
+            text-align: center;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            padding: 1em 0;
+        }
+        .about, .contact {
+            background: #fff;
+            padding: 2em;
+            margin-bottom: 1em;
+            border-radius: 5px;
+        }
+        .spiral-container {
+            position: relative;
+            width: 600px;
+            height: 600px;
+            margin: 2em auto;
+        }
+        .spiral-container img {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            transform-origin: center;
+            transition: transform 0.5s;
+            cursor: pointer;
+        }
+        .footer {
+            text-align: center;
+            padding: 1em 0;
+            background-color: #333;
+            color: #fff;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        input, textarea {
+            padding: 0.5em;
+            margin: 0.5em 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        input[type="submit"] {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        .controls {
+            text-align: center;
+            margin: 1em 0;
+        }
+        .controls button {
+            padding: 0.5em 1em;
+            margin: 0 0.5em;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>Revital Metuko</h1>
+    </div>
+
+    <div class="container">
+        <div class="about">
+            <h2>About Me</h2>
+            <p>השם שלי: רויטל מתוקו</p>
+            <p>בוגרת תואר ראשון BA לפסיכולוגיה באוניברסיטת רייכמן בהתמחות בפסיכולוגיה אירגונית. ביצעתי התמחות במחלקת משאבי אנוש בחברת הייטק, מלווה ארבע שנים נערים ונערות מועמדים לשירות צבאי להגיע לתפקיד שמתאים להם במסגרת שירות מילואים, רס"ן במילואים. עושה הרצאות ומשתפת מהידע האישי שלי על תהליך מיון בתעשיית ההייטק ומהסיפור האישי שלי מביאה טיפים. ומשתפת ידע ומנחה בני נוער לפני גיוס מה לעשות כדי להגיע לתפקיד שהם רוצים.</p>
+            <div class="spiral-container" id="spiral-container">
+                <img src="/img/8ca01ed6-859c-43f2-9bc1-78a3dd2121d4.jpeg" alt="Revital Metuko Image 1">
+                <img src="/img/IMG_3363.jpeg" alt="Revital Metuko Image 2">
+                <img src="/img/IMG_4815.jpeg" alt="Revital Metuko Image 3">
+                <img src="/img/IMG_7943.jpeg" alt="Revital Metuko Image 4">
+                <img src="/img/Screenshot 2024-08-03 215234.png" alt="Revital Metuko Image 5">
+                <img src="IMG_4816.jpeg" alt="Revital Metuko Image 6">
+              
+              
+               <img src="/img/IMG_4815.jpeg" alt="1">
+               <img src="/img/IMG_4816.jpeg" alt="1">
+               <img src="/img/IMG_7943.jpeg" alt="1">
+               <img src="/img/Screenshot 2024-08-03 215234.png" alt="1">
+            </div>
+            <div class="controls">
+                <button id="rotate-left">Rotate Left</button>
+                <button id="rotate-right">Rotate Right</button>
+            </div>
+        </div>
+
+        <div class="contact">
+            <h2>Contact</h2>
+            <p>If you have any questions or would like to reach out, please use the form below:</p>
+            <form action="mailto:revitalmetuko@gmail.com" method="post" enctype="text/plain">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" required>
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+                <label for="message">Message</label>
+                <textarea id="message" name="message" rows="4" required></textarea>
+                <input type="submit" value="Send">
+            </form>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2024 Revital Metuko. All Rights Reserved.</p>
+    </div>
+
+    <script>
+        const images = document.querySelectorAll('.spiral-container img');
+        const centerX = 300;
+        const centerY = 300;
+        const radiusStep = 20;
+        let currentRadius = 100;
+        const angleStep = 30;
+        let currentAngle = 0;
+
+        function updateSpiral() {
+            images.forEach((img, index) => {
+                const angle = index * angleStep + currentAngle;
+                const radians = angle * (Math.PI / 180);
+                const x = centerX + currentRadius * Math.cos(radians) - 60;  // Adjusted for larger image size
+                const y = centerY + currentRadius * Math.sin(radians) - 60;  // Adjusted for larger image size
+                img.style.transform = `translate(${x}px, ${y}px) rotate(${angle}deg)`;
+                currentRadius += radiusStep;
+            });
+            currentRadius = 100;  // Reset radius for next update
+        }
+
+        document.getElementById('rotate-left').addEventListener('click', () => {
+            currentAngle -= angleStep;
+            updateSpiral();
+        });
+
+        document.getElementById('rotate-right').addEventListener('click', () => {
+            currentAngle += angleStep;
+            updateSpiral();
+        });
+
+        // Make images draggable
+        images.forEach(img => {
+            img.draggable = true;
+
+            img.addEventListener('dragstart', (e) => {
+                e.dataTransfer.setData('text/plain', null);
+                img.style.opacity = '0.5';
+            });
+
+            img.addEventListener('dragend', () => {
+                img.style.opacity = '1';
+            });
+
+            img.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                const x = e.clientX - img.parentNode.offsetLeft - 60;
+                const y = e.clientY - img.parentNode.offsetTop - 60;
+                img.style.transform = `translate(${x}px, ${y}px)`;
+            });
+        });
+
+        // Initial spiral setup
+        updateSpiral();
+    </script>
+
+</body>
+</html>
